@@ -28,7 +28,7 @@ export default function AuthProvider({ children } : { children: ReactNode}) {
     return null;
     });
 
-    const [loading, setLoading] = useState(false); //true until we check /auth/me
+    const [loading, setLoading] = useState(false); // not currently used — reserved for a future async check
 
 
     const persistSession = (nextUser: User, token: string) => {
@@ -50,7 +50,7 @@ export default function AuthProvider({ children } : { children: ReactNode}) {
     const handleLogout = () => {
         setUser(null);
         localStorage.removeItem('token');
-
+        localStorage.removeItem('user');
     };
 
     return (
