@@ -45,6 +45,6 @@ export type LoginInput = {
 
 export type AuthResponse = {
   user: User ;
-  token: string ;
+  message: string ;
 };
 

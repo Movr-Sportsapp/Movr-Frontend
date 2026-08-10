@@ -14,3 +14,7 @@ export async function login(data: LoginInput) : Promise<AuthResponse> {
         body: JSON.stringify(data)
     })
 };
+
+export async function logout(): Promise<void> {
+    return apiFetch('/auth/logout', {method: 'POST'});
+};

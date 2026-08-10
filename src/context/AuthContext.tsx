@@ -1,6 +1,6 @@
 import { createContext, useState, useContext, type ReactNode } from "react";
 import type { SignUpInput, LoginInput, User } from "../types/User";
-import { signup as apiSignup, login as apiLogin } from "../api/authApi";
+import { signup as apiSignup, login as apiLogin, logout as apiLogout } from "../api/authApi";
 
 
 interface AuthContextValue  {
@@ -31,25 +31,24 @@ export default function AuthProvider({ children } : { children: ReactNode}) {
     const [loading, setLoading] = useState(false); // not currently used — reserved for a future async check
 
 
-    const persistSession = (nextUser: User, token: string) => {
-        localStorage.setItem('token', token);
+    const persistSession = (nextUser: User) => {
         localStorage.setItem('user', JSON.stringify(nextUser));
         setUser(nextUser);
     };
 
     const handleSignUp = async (data: SignUpInput) => {
-        const { user: signedInUser, token } = await apiSignup(data);
-        persistSession(signedInUser, token);
+        const { user: signedInUser } = await apiSignup(data);
+        persistSession(signedInUser);
     };
 
     const handleLogin = async (data: LoginInput) => {
-        const { user: loggedInUser, token } = await apiLogin(data);
-        persistSession(loggedInUser, token);
+        const { user: loggedInUser } = await apiLogin(data);
+        persistSession(loggedInUser);
     };
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
+        await apiLogout();
         setUser(null);
-        localStorage.removeItem('token');
         localStorage.removeItem('user');
     };
 
