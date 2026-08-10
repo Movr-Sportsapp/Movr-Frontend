@@ -4,6 +4,7 @@ import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import SignUpPage from './pages/SignUp';
 import PostEvent from './pages/PostEvent';
+import Navbar from './components/UI/Navbar';
 import './App.css';
 import { RequireAuth, RequireGuest } from './routes/routeGuards';
 
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <div> 
+        <Navbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<RequireGuest> <SignUpPage /></RequireGuest>}/>

@@ -16,7 +16,7 @@ export async function login(data: LoginInput) : Promise<AuthResponse> {
 };
 
 export async function logout(): Promise<void> {
-    return apiFetch('/auth/logout', {method: 'POST'});
+    return apiFetch('/auth/logout', {method: 'DELETE'});
 };
 
 export async function getMe(): Promise<User> {
