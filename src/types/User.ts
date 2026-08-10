@@ -48,3 +48,5 @@ export type AuthResponse = {
   message: string ;
 };
 
+// PArtial makes everything from User optional, Omit strips id and createdAt from that list 
+export type UpdateUserInput = Partial<Omit<User, 'id' | 'createdAt' >> ;
