@@ -2,7 +2,7 @@ import { apiFetch } from "./fetchClient";
 import type { SignUpInput, LoginInput, AuthResponse, User } from "../types/User";
 
 export async function signup(data: SignUpInput) : Promise<AuthResponse> {
-    return apiFetch('/auth/signup', {
+    return apiFetch('/auth/register', {
         method: 'POST',
         body: JSON.stringify(data)
     })
