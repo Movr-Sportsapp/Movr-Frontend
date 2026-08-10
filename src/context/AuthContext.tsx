@@ -1,6 +1,6 @@
-import { createContext, useState, useContext, type ReactNode } from "react";
+import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
 import type { SignUpInput, LoginInput, User } from "../types/User";
-import { signup as apiSignup, login as apiLogin, logout as apiLogout } from "../api/authApi";
+import { signup as apiSignup, login as apiLogin, logout as apiLogout, getMe } from "../api/authApi";
 
 
 interface AuthContextValue  {
@@ -15,21 +15,35 @@ interface AuthContextValue  {
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export default function AuthProvider({ children } : { children: ReactNode}) {
-    const [user, setUser] = useState<User | null>(() => {
-        const storedUser = localStorage.getItem('user');
-        if (storedUser) {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true); // true until we check /user/me
+
+    useEffect(() => {
+    // This effect runs once on mount to fetch the current user.
+    // We track `alive` so we don't call setState after unmount.
+        let alive = true;
+
+        (async () => {
             try {
-            return JSON.parse(storedUser);
+                const currentUser = await getMe();
+            if (alive) {
+                setUser(currentUser);
+                localStorage.setItem('user', JSON.stringify(currentUser));
+            }
         } catch {
-            localStorage.removeItem('user'); // if corrupted data, clear it
-            return null;
-        }
-    }
-    return null;
-    });
+            if (alive) {
+                setUser(null);
+                localStorage.removeItem('user');
+            }
+        } finally {
+            if (alive) setLoading(false);
+        }    
+        })();
+        return () => {
+            alive = false;
+        };
 
-    const [loading, setLoading] = useState(false); // not currently used — reserved for a future async check
-
+    }, []);
 
     const persistSession = (nextUser: User) => {
         localStorage.setItem('user', JSON.stringify(nextUser));

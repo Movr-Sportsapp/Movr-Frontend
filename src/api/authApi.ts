@@ -1,5 +1,5 @@
 import { apiFetch } from "./fetchClient";
-import type { SignUpInput, LoginInput, AuthResponse } from "../types/User";
+import type { SignUpInput, LoginInput, AuthResponse, User } from "../types/User";
 
 export async function signup(data: SignUpInput) : Promise<AuthResponse> {
     return apiFetch('/auth/signup', {
@@ -17,4 +17,8 @@ export async function login(data: LoginInput) : Promise<AuthResponse> {
 
 export async function logout(): Promise<void> {
     return apiFetch('/auth/logout', {method: 'POST'});
+};
+
+export async function getMe(): Promise<User> {
+    return apiFetch('/user/me')
 };
