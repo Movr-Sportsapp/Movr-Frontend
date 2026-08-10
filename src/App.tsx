@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/api/health" element={<HealthCheck />} />  
+        <Route path="/healthcheck" element={<HealthCheck />} />  
       </Routes>
     </div>
   )
