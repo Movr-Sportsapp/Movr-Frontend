@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import type { SignUpInput } from "../types/User";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 
@@ -194,10 +194,16 @@ const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
                 /></label>
             {error && <p style={{ color: 'red'}}>{error}</p>}
 
-            <button type='submit' disabled={loading}>
-                {loading ? 'Signing up...' : 'Sign up'}
+            <button className="w-full mt-2 py-3.5 rounded-xl bg-lime-500 text-bg font-bold text-sm tracking-wide hover:bg-lime/90 transition-all disabled:opacity-70 disabled:cursor-not-allowed"
+                type='submit' 
+                disabled={loading}>
+                {loading ? 'loading...' : 'Create account'}
             </button>
             </form>
+            <p className="mt-6 text-center text-sm text-muted"> Already have an account? </p>
+            <button className="text-lime-500 hover:text-lime/80 font-medium transition-colors">
+            <NavLink to="/login">Login</NavLink>
+            </button>
     </div>
     )
 };
