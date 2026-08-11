@@ -21,6 +21,7 @@ const HOW_IT_WORKS = [
 
 export default function HomePage() {
     return (
+        <div className="bg-black">
         <div className="min-h-screen bg-bg">
       {/* ── HERO ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
@@ -32,8 +33,8 @@ export default function HomePage() {
           }}
         />
         {/* Multi-layer overlay for the kinetic dark feel */}
-        <div className="absolute inset-0 bg-gradient-to-b from-bg/80 via-bg/50 to-bg" />
-        <div className="absolute inset-0 bg-gradient-to-r from-bg/40 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-b from-bg/80 via-bg/50 to-bg" />
+        <div className="absolute inset-0 bg-linear-to-r from-bg/40 to-transparent" />
 
         <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/10 border border-lime/20 mb-12">
@@ -42,11 +43,14 @@ export default function HomePage() {
               Sports community · Berlin and beyond
             </span>
           </div>
-
-          <h1 className="font-display font-black uppercase leading-[0.88] text-white mb-6">
+          
+          <h1 className="font-display font-black uppercase leading-[0.88] text-[#B9FE52] mb-6">
+            <div className="bg-black" >
             <span className="block" style={{ fontSize: 'clamp(3rem,10vw,8rem)', letterSpacing: '-0.02em' }}>
               FIND YOUR
             </span>
+            </div>
+            <div className="bg-[#6E3CF6]">
             <span
               className="block"
               style={{
@@ -58,9 +62,12 @@ export default function HomePage() {
             >
               PEOPLE.
             </span>
+            </div>
+            <div className="bg-black " >
             <span className="block text-lime" style={{ fontSize: 'clamp(3rem,10vw,8rem)', letterSpacing: '-0.02em' }}>
               MOVE TOGETHER.
             </span>
+            </div>
           </h1>
 
           <p className="text-lg text-white/55 max-w-xl mx-auto mb-10 font-light leading-relaxed">
@@ -104,6 +111,7 @@ export default function HomePage() {
           <p className="text-muted text-xs">© 2026 MOVR. Move together.</p>
         </div>
       </footer>
+          </div>
           </div>
     )
 };
