@@ -2,7 +2,7 @@
 export type Event = {
     id: string;
     title: string;
-    description: string | null ;
+    description: string;
     sport: string;
     creator: string;
     location: {
@@ -13,15 +13,25 @@ export type Event = {
         };
     };
     date: string;
-    skilllevel: 'Beginner' | 'Intermediate' | 'Advanced' | 'Professional' | null;
+    skillLevel: 'Beginner' | 'Intermediate' | 'Advanced' | 'Professional' ;
     maxParticipants: number;
-    participants?: {
+    participants: {
         user: string;
         joinedAt: string;
-    };
-    status: 'active' | 'cancelled' | 'completed' | null;
+    }[];
+    status: 'active' | 'cancelled' | 'completed' ;
     public: boolean;
     womenOnly: boolean;
     flintaOnly: boolean;
 };
 
+export type EventsQuery = {
+    sport?: string;
+    city?: string;
+    skillLevel?: 'Beginner' | 'Intermediate' | 'Advanced' | 'Professional';
+    status?: 'active' | 'cancelled' | 'completed';
+    date?: string;
+    lat?: number;
+    lng?: number;
+    radiusKm?: number;
+}
