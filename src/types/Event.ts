@@ -4,7 +4,11 @@ export type Event = {
     title: string;
     description: string;
     sport: string;
-    creator: string;
+    creator: {
+        id: string;
+        username: string;
+        profileImage: string;
+    };
     location: {
     city: string;
     coordinates?: {
@@ -13,6 +17,7 @@ export type Event = {
         };
     };
     date: string;
+    time: string; // NEEDS to be added in Backend aswell!
     skillLevel: 'Beginner' | 'Intermediate' | 'Advanced' | 'Professional' ;
     maxParticipants: number;
     participants: {
