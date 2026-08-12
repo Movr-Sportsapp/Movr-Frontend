@@ -1,5 +1,29 @@
-
-    @import 'tailwindcss';
-   @import 'tailwindcss/preflight';
+@import 'tailwindcss';
+@import 'tailwindcss/preflight';
 @tailwind utilities;
 @plugin 'daisyui';
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap');
+
+@theme {
+  --color-bg: #0B0C0E;
+  --color-surface: #131417;
+  --color-surface2: #1B1C21;
+  --color-lime: #C8FA5F;
+  --color-ember: #FF5C38;
+  --color-muted: #888890;
+  --color-divider: #232428;
+  --font-display: 'Barlow Condensed', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+body {
+  background: #0B0C0E;
+  color: #EFEFEF;
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html { scrollbar-width: none; }
+html::-webkit-scrollbar { display: none; }
