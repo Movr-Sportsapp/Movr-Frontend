@@ -1,9 +1,14 @@
 
+
 export type Event = {
     id: string;
     title: string;
     description: string;
-    sport: string;
+    sport: {
+        name: string;
+        category: string;
+        icon: string;
+    }
     creator: {
         id: string;
         username: string;
