@@ -69,7 +69,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
                 onClick={onSignup}
                 className="px-8 py-4 rounded-xl bg-lime text-bg font-bold text-base hover:bg-lime/90 active:scale-95 transition-all duration-150 shadow-lg shadow-lime/20"
               >
-                Join MOVR
+                Join MOVR*
               </button>
               <button
                 onClick={onLogin}
@@ -77,6 +77,9 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
               >
                 Log in
               </button>
+              <p className="text-sm text-white/25  font-light">
+          *Must be 18 years or older to join MOVR community 
+        </p>
             </>
           )}
         </div>
