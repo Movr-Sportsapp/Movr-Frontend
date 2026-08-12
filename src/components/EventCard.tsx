@@ -20,7 +20,7 @@ export default function EventCard({ event}: EventCardProps) {
             <div className="flex justify-between items-start">
                 <h3 className="text-lg font-semibold">{event.title}</h3>
                 <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
-                    {event.sport}
+                    {event.sport?.name ?? 'Unknown'}
                 </span>
             </div>
 
