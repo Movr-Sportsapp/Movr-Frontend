@@ -8,6 +8,7 @@ import Navbar from "./components/UI/Navbar";
 import "./App.css";
 import { RequireAuth, RequireGuest } from "./routes/routeGuards";
 import EventsListPage from "./pages/EventsListPage";
+import  EventDetailsPage from "./pages/EventDetailsPage";
 
 function App() {
   return (
@@ -48,6 +49,14 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          path="/events/:eventId"
+          element={
+            <RequireAuth>
+              <EventDetailsPage />
+            </RequireAuth>
+          }
+          />
         <Route path="/healthcheck" element={<HealthCheck />} />
       </Routes>
     </div>

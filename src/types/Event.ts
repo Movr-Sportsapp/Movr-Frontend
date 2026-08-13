@@ -22,7 +22,7 @@ export type Event = {
   skillLevel: "Beginner" | "Intermediate" | "Advanced" | "Professional";
   maxParticipants: number;
   participants: {
-    user: string;
+    user: string | {id: string; username: string; profileImage: string};
     joinedAt: string;
   }[];
   status: "active" | "cancelled" | "completed";
