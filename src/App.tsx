@@ -33,7 +33,7 @@ function App() {
           }
         />
         <Route
-          path="/post"
+          path="/createevent"
           element={
             <RequireAuth>
               <PostEvent />

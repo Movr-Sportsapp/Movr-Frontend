@@ -1,10 +1,8 @@
-
-
 export type Event = {
   id: string;
   title: string;
   description: string;
-  sport: { name: string; category: string; icon: string; id: string };
+  sport: string;
   creator: {
     id: string;
     username: string;
@@ -40,4 +38,9 @@ export type EventsQuery = {
   lat?: number;
   lng?: number;
   radiusKm?: number;
+};
+
+export type EventResponse = {
+  event: Event;
+  message: string;
 };
