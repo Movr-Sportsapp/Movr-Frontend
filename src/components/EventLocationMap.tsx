@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+
 
 //Custom pin in MOVR Lime color - avoids default-marker-icon bug that can appear betwen leaflet and Vite
 const limeIcon = L.divIcon({
@@ -20,7 +20,10 @@ interface EventLocationMapProps {
     label: string;
 }
 
+
+
 export function EventLocationMap({ lat, lng, label}: EventLocationMapProps) {
+    console.log(lat, lng);
     return (
         <MapContainer
           center={[ lat, lng]}
@@ -30,7 +33,7 @@ export function EventLocationMap({ lat, lng, label}: EventLocationMapProps) {
           >
             <TileLayer
             // CARTO dark tiles — free, no key, matches your black theme
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
              />
                 <Marker position={[lat, lng]} icon={limeIcon}>

@@ -13,7 +13,7 @@ function TagPill({ children} : { children: React.ReactNode}) {
     );
 }
 
-export function EventDetailsPage() {
+export default function EventDetailsPage() {
     const { eventId } = useParams<{ eventId: string}>();
     const [event, setEvent] = useState<Event | null>(null);
     const [loading, setLoading ] = useState(true);
@@ -26,7 +26,7 @@ export function EventDetailsPage() {
         (async () => {
             try {
                 setLoading(true);
-                const data = await apiFetch('/events/${eventId}', {}, true);
+                const data = await apiFetch(`/events/${eventId}`, {}, true);
                 if (!cancelled) setEvent(data.data);
             } catch {
                 if(!cancelled) setError('Could not load this event. Please try again in a moment.')
@@ -55,7 +55,7 @@ export function EventDetailsPage() {
       )}
       {/* HERO SECTION */}
       <div
-        className="relative h-72 w-full bg-cover bg-center sm:h-96"
+        className="relative h-40 w-full bg-cover bg-center sm:h-96"
         style={{ backgroundImage: `url(${getSportImage(sportName)})` }}
       >
         <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-black/20" />
@@ -63,13 +63,14 @@ export function EventDetailsPage() {
           <div className="mb-3 flex items-center gap-2">
             <span className="text-xl">{getSportEmoji(sportName)}</span>
             <span
-              className="text-sm uppercase tracking-wide"
+              className="text-sm tracking-wide"
               style={{ color: getSportColor(sportName) }}
             >
               {sportName}
             </span>
           </div>
-          <h1 className="text-3xl font-bold sm:text-5xl">{event.title}</h1>
+          <h1 className="font-display font-black uppercase text-4xl md:text-5xl lg:text-6xl tracking-[-0.015em] text-white leading-[0.9] mb-5">
+            {event.title}</h1>
         </div>
       </div>
 
@@ -86,11 +87,14 @@ export function EventDetailsPage() {
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-lg font-medium">
-              {new Date(event.date).toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" })}
+             📅 {new Date(event.date).toLocaleDateString("de-DE", { weekday: "long", day: "numeric", month: "long" })}
             </p>
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
             {/* time not live in backend yet — falls back quietly */}
-            {event.time && <p className="text-white/60">{event.time} Uhr</p>}
-            <p className="mt-1 text-sm text-white/60">
+            {event.time && <span className="flex items-center gap-1.5"> ⏰ {event.time} Uhr</span>}
+            <span className="flex items-center gap-1.5">📍 {event.location.city}</span>
+            </div>
+            <p className="mt-4 text-sm text-white/60">
               {spotsLeft} of {event.maxParticipants} spots left
               {isFull && <span className="ml-2 text-red-400">(Full)</span>}
             </p>
@@ -114,14 +118,14 @@ export function EventDetailsPage() {
 
         {/* Description */}
         <div className="mb-8">
-          <h2 className="mb-2 text-lg font-semibold">About this event</h2>
+          <h2 className="mb-2 text-lg font-semibold text-lime-400 uppercase">Description</h2>
           <p className="whitespace-pre-line text-white/80">{event.description}</p>
         </div>
 
         {/* Location + map */}
         <div className="mb-8">
-          <h2 className="mb-2 text-lg font-semibold">Meeting point</h2>
-          <p className="text-white/80">{event.location.city}</p>
+          <h2 className="mb-2 text-lg font-semibold text-lime-400 uppercase">Meeting point</h2>
+          <p className="text-white/80">📍 {event.location.city}</p>
           <div className="mt-4 h-64 w-full overflow-hidden rounded-2xl border border-white/10 bg-white/5">
             {event.location.coordinates ? (
               <EventLocationMap

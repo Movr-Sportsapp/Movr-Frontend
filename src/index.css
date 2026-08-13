@@ -26,3 +26,7 @@ body {
 
 html { scrollbar-width: none; }
 html::-webkit-scrollbar { display: none; }
+
+.leaflet-container img {
+  max-width: none !important;
+}
