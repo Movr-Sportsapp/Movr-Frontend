@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import type { Event } from "../types/Event";
 import { useAuth } from "../context/AuthContext";
+import { getSportEmoji, getSportColor } from "../assets/sports";
 
 interface EventCardProps {
   event: Event;
@@ -19,16 +20,24 @@ export default function EventCard({ event }: EventCardProps) {
 
   if (loading) return null;
 
+  const sportName = event.sport?.name ?? 'Unknown';
+  const sportColor = getSportColor(sportName);
+
   return (
-    <div className="rounded-xl border border-gray-200 shadow-sm p-4 flex flex-col gap-2 hover:shadow-md transition">
+    <div className="rounded-xl bg border border-gray-200 shadow-sm p-4 flex flex-col gap-2 hover:shadow-md transition"
+                           style={{ backgroundColor: `${sportColor}45` }}>
       <div className="flex justify-between items-start">
         <h3 className="text-lg font-semibold">{event.title}</h3>
-        <span className="text-xs px-2 py-1 rounded-full bg-blue-100 text-blue-700">
-          {event.sport?.name ?? "Unknown"}
+        <span
+          className="text-xs px-2 py-1 rounded-full flex items-center gap-1"
+          style={{ backgroundColor: `${sportColor}22`, color: sportColor }}
+        >
+          <span>{getSportEmoji(sportName)}</span>
+          {sportName}
         </span>
       </div>
 
-      <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted mb-3">
+      <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs mb-3">
         <span className="flex items-center gap-1">📅 {formattedDate}</span>
         {/* Time only for logged-in users */}
         {user && (
@@ -40,6 +49,7 @@ export default function EventCard({ event }: EventCardProps) {
       </div>
 
       <div className="flex items-center gap-2 mb-3">
+        <p className="text-sm">Hosted by: </p>
         {/* Avatar only for logged-in users */}
         {user && (
           <img
@@ -48,7 +58,7 @@ export default function EventCard({ event }: EventCardProps) {
             className="w-5 h-5 rounded-full object-cover ring-1 ring-white/10"
           />
         )}
-        <span className="text-sm text-muted">{event.creator.username}</span>
+        <span className="text-sm ">{event.creator.username}</span>
       </div>
 
       <p className="text-sm">
