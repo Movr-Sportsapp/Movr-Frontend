@@ -134,7 +134,7 @@ export default function EventsListPage() {
             </div>
             {user && (
               <Link
-                to="/events/new"
+                to="/createevent"
                 className="shrink-0 px-4 py-2 rounded-full text-sm font-semibold bg-lime-400 text-black hover:bg-lime-300"
               >
                 + Post Activity
