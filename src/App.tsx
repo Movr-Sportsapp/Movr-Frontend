@@ -5,6 +5,7 @@ import LoginPage from "./pages/Login";
 import SignUpPage from "./pages/SignUp";
 import PostEvent from "./pages/PostEvent";
 import Navbar from "./components/UI/Navbar";
+import BottomNav from "./components/UI/BottomNav";
 import "./App.css";
 import { RequireAuth, RequireGuest } from "./routes/routeGuards";
 import EventsListPage from "./pages/EventsListPage";
@@ -59,6 +60,7 @@ function App() {
           />
         <Route path="/healthcheck" element={<HealthCheck />} />
       </Routes>
+      <BottomNav />
     </div>
   );
 }
