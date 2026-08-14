@@ -28,8 +28,10 @@ type Level = (typeof LEVELS)[number];
 type Location = {
   address: string;
   city: string;
-  lat: number | null;
-  lng: number | null;
+  coordinates?: {
+    latitude: number;
+    longitude: number;
+  };
 };
 
 type FormState = {
@@ -50,7 +52,11 @@ const initialForm: FormState = {
   description: "",
   date: "",
   time: "",
-  location: { address: "", city: "", lat: null, lng: null },
+  location: {
+    address: "",
+    city: "",
+    coordinates: undefined,
+  },
   skillLevel: "Beginner",
   maxParticipants: 10,
   isPublic: true,
@@ -126,8 +132,12 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
     [sports, selectedSport],
   );
 
-  // Debounced geocoding: resolve lat/lng from the typed address ~600ms after
-  // the user stops typing, instead of firing a request on every keystroke.
+  // Debounced geocoding: resolve coordinates from the typed address ~600ms
+  // after the user stops typing, instead of firing a request on every
+  // keystroke. Coordinates are nested under location.coordinates to match
+  // the Location type — writing location.latitude/location.longitude
+  // directly (the previous bug) silently missed the actual field and left
+  // location.coordinates stuck at its initial value.
   useEffect(() => {
     const address = form.location.address.trim();
     if (!address) {
@@ -142,18 +152,25 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
         if (result) {
           setForm((prev) => ({
             ...prev,
-            location: { ...prev.location, lat: result.lat, lng: result.lng },
+            location: {
+              ...prev.location,
+              coordinates: { latitude: result.lat, longitude: result.lng },
+            },
           }));
           setGeocodeStatus("resolved");
           setErrors((prev) => ({ ...prev, location: undefined }));
         } else {
           setForm((prev) => ({
             ...prev,
-            location: { ...prev.location, lat: null, lng: null },
+            location: { ...prev.location, coordinates: undefined },
           }));
           setGeocodeStatus("error");
         }
       } catch {
+        setForm((prev) => ({
+          ...prev,
+          location: { ...prev.location, coordinates: undefined },
+        }));
         setGeocodeStatus("error");
       }
     }, 600);
@@ -171,7 +188,7 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
   const setLocationAddress = (address: string) => {
     setForm((prev) => ({
       ...prev,
-      location: { ...prev.location, address, lat: null, lng: null },
+      location: { ...prev.location, address, coordinates: undefined },
     }));
     if (errors.location)
       setErrors((prev) => ({ ...prev, location: undefined }));
@@ -190,7 +207,7 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
     if (!form.time) next.time = "Pick a start time";
     if (!form.location.address.trim()) {
       next.location = "Add a meeting point";
-    } else if (form.location.lat === null || form.location.lng === null) {
+    } else if (!form.location.coordinates) {
       next.location = "We couldn't locate that address — try refining it";
     }
     if (!form.location.city.trim()) next.city = "Add a city";
@@ -370,12 +387,14 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
                       Locating address...
                     </p>
                   )}
-                  {!errors.location && geocodeStatus === "resolved" && (
-                    <p className="mt-1 text-xs text-gray-500">
-                      📍 {form.location.lat?.toFixed(5)},{" "}
-                      {form.location.lng?.toFixed(5)}
-                    </p>
-                  )}
+                  {!errors.location &&
+                    geocodeStatus === "resolved" &&
+                    form.location.coordinates && (
+                      <p className="mt-1 text-xs text-gray-500">
+                        📍 {form.location.coordinates.latitude.toFixed(5)},{" "}
+                        {form.location.coordinates.longitude.toFixed(5)}
+                      </p>
+                    )}
                   {!errors.location && geocodeStatus === "error" && (
                     <p className="mt-1 text-xs text-amber-400">
                       Couldn't find that address — try being more specific.
