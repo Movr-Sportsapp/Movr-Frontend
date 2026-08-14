@@ -3,13 +3,13 @@ import { useAuth } from '../../context/AuthContext';
 import DefaultAvatar from '../../assets/img/default_userAvatar.png';
 
 const Navbar = () => {
-    const { user, loading, logout } = useAuth();
-    const navigate = useNavigate();
+  const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        await logout();
-        navigate("/");
-    };
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
     return (
        <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-6 border-b border-divider bg-bg/90 backdrop-blur-md" >
@@ -22,7 +22,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1">
           {user && (
             <li>
-              <NavLink to="/create">Post Event</NavLink>
+              <NavLink to="/createevent">Post Event</NavLink>
             </li>
           )}
 
