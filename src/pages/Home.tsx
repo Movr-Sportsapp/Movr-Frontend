@@ -26,13 +26,6 @@ export default function HomePage() {
         <div className="min-h-screen bg-bg">
       
       <UpcomingEvents />
-
-      <footer className="py-8 px-6 border-t border-divider">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <span className="font-display font-black text-xl tracking-widest uppercase text-white">MOVR</span>
-          <p className="text-muted text-xs">© 2026 MOVR. Move together.</p>
-        </div>
-      </footer>
       </div>
       </div>
       </>

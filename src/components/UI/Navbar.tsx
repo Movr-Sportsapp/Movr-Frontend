@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import DefaultAvatar from '../../assets/img/default_userAvatar.png.png';
+import DefaultAvatar from '../../assets/img/default_userAvatar.png';
 
 const Navbar = () => {
     const { user, loading, logout } = useAuth();
