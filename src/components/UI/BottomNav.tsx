@@ -9,7 +9,7 @@ import { useAuth } from "../../context/AuthContext";
 
 const navItems = [
     {icon: Home, path: '/'},
-    {icon: PlusCircle, path: '/post'},
+    {icon: PlusCircle, path: '/createevent'},
     // CTA middle Button handled seperately down below
     {icon: UserRound, path:'/me'}, // Profile Page needs to be finished, backend logic aswell
     {icon: MessageCircleMore, path:''}, // Non-existing at the moment. Needs to be added when Profile Page is ready (if we find the time)
