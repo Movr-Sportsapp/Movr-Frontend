@@ -1,17 +1,17 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
-    const { user, loading, logout } = useAuth();
-    const navigate = useNavigate();
+  const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
 
-    const handleLogout = async () => {
-        await logout();
-        navigate("/");
-    };
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
 
-    return (
-       <div className="navbar bg-base-100">
+  return (
+    <div className="navbar bg-base-100">
       <div className="flex-1">
         <Link to="/" className="btn btn-ghost text-xl">
           MOVR
@@ -26,7 +26,7 @@ const Navbar = () => {
 
           {user && (
             <li>
-              <NavLink to="/create">Post Event</NavLink>
+              <NavLink to="/createevent">Post Event</NavLink>
             </li>
           )}
 
@@ -34,7 +34,7 @@ const Navbar = () => {
             <>
               <li className="pointer-events-none">
                 <span className="opacity-70 cursor-default">
-                  { `Hi, ${user.username}` }
+                  {`Hi, ${user.username}`}
                 </span>
               </li>
               <li>
