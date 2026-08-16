@@ -28,3 +28,7 @@ export async function createEvent(data: CreateEventInput): Promise<Event> {
     body: JSON.stringify(data),
   });
 }
+
+export async function joinEvent(eventId: string): Promise<{ data: Event }> {
+  return apiFetch(`/events/${eventId}/join`, { method: "POST" }, true);
+}

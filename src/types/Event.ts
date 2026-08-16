@@ -2,7 +2,11 @@ export type Event = {
   id: string;
   title: string;
   description: string;
-  sport: string;
+  sport: {
+    id: string;
+    name: string;
+    category: string;
+  };
   creator: {
     id: string;
     username: string;
