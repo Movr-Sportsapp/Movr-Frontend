@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, useContext, type ReactNode } from "react";
-import type { SignUpInput, LoginInput, User } from "../types/User";
-import { signup as apiSignup, login as apiLogin, logout as apiLogout, getMe } from "../api/authApi";
+import type { SignUpInput, LoginInput, User, UpdateUserInput } from "../types/User";
+import { signup as apiSignup, login as apiLogin, logout as apiLogout, getMe, updateMe } from "../api/authApi";
 
 
 interface AuthContextValue  {
@@ -9,6 +9,7 @@ interface AuthContextValue  {
     login: (data: LoginInput) => Promise<void>;
     signup: (data: SignUpInput) => Promise<void>;
     logout: () => void;
+    updateUser: (data: UpdateUserInput) => Promise<void>;
 
 }
 
@@ -60,6 +61,11 @@ export default function AuthProvider({ children } : { children: ReactNode}) {
         persistSession(loggedInUser);
     };
 
+    const handleUpdateUser = async (data: UpdateUserInput) => {
+        const updated = await updateMe(data);
+        persistSession(updated);
+    }
+
     const handleLogout = async () => {
         await apiLogout();
         setUser(null);
@@ -67,7 +73,7 @@ export default function AuthProvider({ children } : { children: ReactNode}) {
     };
 
     return (
-    <AuthContext.Provider value={{user, loading, signup: handleSignUp, login: handleLogin, logout: handleLogout}}>
+    <AuthContext.Provider value={{user, loading, signup: handleSignUp, login: handleLogin, logout: handleLogout, updateUser: handleUpdateUser}}>
         {children}
         </AuthContext.Provider>
     );

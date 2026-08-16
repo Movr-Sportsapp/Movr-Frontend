@@ -10,6 +10,7 @@ import "./App.css";
 import { RequireAuth, RequireGuest } from "./routes/routeGuards";
 import EventsListPage from "./pages/EventsListPage";
 import  EventDetailsPage from "./pages/EventDetailsPage";
+import UpdateUser from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -55,6 +56,14 @@ function App() {
           element={
             <RequireAuth>
               <EventDetailsPage />
+            </RequireAuth>
+          }
+          />
+           <Route
+          path="/me"
+          element={
+            <RequireAuth>
+              <UpdateUser />
             </RequireAuth>
           }
           />

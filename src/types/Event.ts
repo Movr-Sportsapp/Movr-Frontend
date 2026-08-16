@@ -24,7 +24,7 @@ export type Event = {
   skillLevel: "Beginner" | "Intermediate" | "Advanced" | "Professional";
   maxParticipants: number;
   participants: {
-    user: string | { id: string; username: string; profileImage: string };
+    user: {id: string; username: string; profileImage: string; firstName: string; lastName: string;};
     joinedAt: string;
   }[];
   status: "active" | "cancelled" | "completed";
