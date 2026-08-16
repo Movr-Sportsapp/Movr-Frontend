@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const decoyLinks = [
       { label: 'Home', to: '/' },
-    { label: 'My Profile', to: '' }, // <-- fill in real path once profile page exists
+    { label: 'My Profile', to: '/user/me' }, // <-- fill in real path once profile page exists
     { label: 'Browse Activities', to: '/events' },
     { label: 'Messages', to: '' },       // <-- decoy, no page yet
     { label: 'About Us', to: '' },      // <-- decoy, no page yet

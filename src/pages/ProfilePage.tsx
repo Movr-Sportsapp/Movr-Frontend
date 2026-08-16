@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { UpdateUserInput } from "../types/User";
 import { useAuth } from "../context/AuthContext";
-import DefaultAvatar from '../../assets/img/default_userAvatar.png';
+import DefaultAvatar from '../assets/img/default_userAvatar.png';
+import { getEvents } from "../api/eventApi";
+import type { Event } from "../types/Event";
+import EventCard from "../components/EventCard";
 
 
 export default function UpdateUser() {
@@ -12,7 +15,6 @@ const [saving, setSaving] = useState(false);
 const [error, setError ] =useState<string | null>(null);
 
 const [form, setForm] = useState<UpdateUserInput>({
-
     firstName: user?.firstName ?? '',
     lastName: user?.lastName ?? '',
     username: user?.username ?? '',
@@ -25,7 +27,27 @@ const [form, setForm] = useState<UpdateUserInput>({
     bio: user?.bio ?? '',
     profileImage: user?.profileImage,
     sports :  user?.sports ?? [],  
-})
+});
+
+const [myEvents, setMyEvents ] = useState<Event[]>([]);
+const [eventsLoading, setEventsLoading ] = useState(true);
+
+useEffect(() => {
+    (async () => {
+        try {
+            const result = await getEvents();
+            setMyEvents(result.events);
+        } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong :(");
+    } finally {
+        setEventsLoading(false);
+    }
+})();
+}, []);
+
+const createdEvents = myEvents.filter((e) => e.creator.id === user?.id);
+const joinedEvents = myEvents.filter((e) => e.participants.some((p) => p.user.id === user?.id ));
+
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => 
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -81,8 +103,36 @@ return(
                 >
                     Edit Profile
                 </button>
+            <div className="w-full mt-8">
+    <h2 className="text-lg font-semibold mb-3">Events you created</h2>
+    {eventsLoading ? (
+        <p className="text-sm text-white/60">Loading events...</p>
+    ) : createdEvents.length === 0 ? (
+        <p className="text-sm text-white/60">You haven't created any events yet.</p>
+    ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {createdEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+            ))}
+        </div>
+    )}
+</div>
 
-                {/* Joined / created events go here in Step 3 */}
+<div className="w-full mt-8">
+    <h2 className="text-lg font-semibold mb-3">Events you joined</h2>
+    {eventsLoading ? (
+        <p className="text-sm text-white/60">Loading events...</p>
+    ) : joinedEvents.length === 0 ? (
+        <p className="text-sm text-white/60">You haven't joined any events yet.</p>
+    ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {joinedEvents.map((event) => (
+                <EventCard key={event.id} event={event} />
+            ))}
+        </div>
+    )}
+</div>
+        
             </div>
         ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
