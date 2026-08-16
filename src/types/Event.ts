@@ -2,7 +2,11 @@ export type Event = {
   id: string;
   title: string;
   description: string;
-  sport: string;
+  sport: {
+    id: string;
+    name: string;
+    category: string;
+  };
   creator: {
     id: string;
     username: string;
@@ -20,7 +24,7 @@ export type Event = {
   skillLevel: "Beginner" | "Intermediate" | "Advanced" | "Professional";
   maxParticipants: number;
   participants: {
-    user: string | {id: string; username: string; profileImage: string};
+    user: string | { id: string; username: string; profileImage: string };
     joinedAt: string;
   }[];
   status: "active" | "cancelled" | "completed";
