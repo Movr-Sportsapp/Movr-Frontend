@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { apiFetch } from "../api/fetchClient";
 import { getSportEmoji, getSportColor, getSportImage } from "../assets/sports";
-import { joinEvent } from "../api/eventApi.ts";
+import { joinEvent, leaveEvent } from "../api/eventApi.ts";
 import type { Event } from "../types/Event";
 import { useAuth } from "../context/AuthContext.tsx";
 
@@ -47,6 +47,7 @@ export default function EventDetailsPage() {
     };
   }, [eventId]);
 
+  // console.log(user);
   const isJoined = !!(
     user &&
     event?.participants.some((p) =>
@@ -54,7 +55,7 @@ export default function EventDetailsPage() {
     )
   );
 
-  async function handleJoin() {
+  async function handleJoinToggle() {
     if (!user) {
       navigate("/login", { state: { from: `/events/${eventId}` } });
       return;
@@ -62,10 +63,16 @@ export default function EventDetailsPage() {
     setJoining(true);
     setJoinError(null);
     try {
-      const res = await joinEvent(eventId!);
-      setEvent(res.data); // backend returns the updated event with populated participants
+      const res = isJoined
+        ? await leaveEvent(eventId!)
+        : await joinEvent(eventId!);
+      setEvent(res.data);
     } catch (err) {
-      setJoinError("Could not join this event. Please try again.");
+      setJoinError(
+        isJoined
+          ? "Could not leave this event. Please try again."
+          : "Could not join this event. Please try again.",
+      );
     } finally {
       setJoining(false);
     }
@@ -88,6 +95,7 @@ export default function EventDetailsPage() {
   const spotsLeft = event.maxParticipants - event.participants.length;
   const isFull = spotsLeft <= 0;
   const isInactive = event.status !== "active";
+  const isHost = user?.id === event.creator.id;
 
   return (
     <div className="min-h-screen bg-black text-white">
@@ -156,17 +164,27 @@ export default function EventDetailsPage() {
             </p>
           </div>
           <button
-            onClick={handleJoin}
-            disabled={isFull || isInactive || joining || isJoined}
-            className="rounded-xl bg-lime-400 px-6 py-3 font-semibold text-black transition hover:bg-lime-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/40"
+            onClick={handleJoinToggle}
+            disabled={
+              joining || isHost || (!isJoined && (isFull || isInactive))
+            }
+            className={
+              isJoined
+                ? "group rounded-xl border border-white/20 bg-white/5 px-6 py-3 font-semibold text-white transition hover:border-red-400/60 hover:bg-red-400/10 hover:text-red-300 disabled:cursor-not-allowed disabled:opacity-50"
+                : "rounded-xl bg-lime-400 px-6 py-3 font-semibold text-black transition hover:bg-lime-300 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-white/40"
+            }
           >
-            {isJoined
-              ? "You're in"
-              : isFull
-                ? "Event full"
-                : joining
-                  ? "Joining…"
-                  : "Join Event"}
+            {joining
+              ? isJoined
+                ? "Leaving…"
+                : "Joining…"
+              : isHost
+                ? "You're hosting"
+                : isJoined
+                  ? "Leave Event"
+                  : isFull
+                    ? "Event full"
+                    : "Join Event"}
           </button>
           {joinError && (
             <p className="mt-2 text-sm text-red-400">{joinError}</p>

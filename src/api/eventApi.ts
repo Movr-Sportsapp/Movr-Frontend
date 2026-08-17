@@ -32,3 +32,7 @@ export async function createEvent(data: CreateEventInput): Promise<Event> {
 export async function joinEvent(eventId: string): Promise<{ data: Event }> {
   return apiFetch(`/events/${eventId}/join`, { method: "POST" }, true);
 }
+
+export async function leaveEvent(eventId: string): Promise<{ data: Event }> {
+  return apiFetch(`/events/${eventId}/join`, { method: "DELETE" }, true);
+}
