@@ -29,9 +29,14 @@ export default function UserLocation() {
     );
   }, []);
 
+  const setLocationManually = useCallback((lat: number, lng: number) => {
+    setLocation({ lat, lng});
+    setError(null);
+  }, []);
+
   const clearLocation = useCallback(() => {
     setLocation(null);
   }, []);
 
-  return { location, error, loading, requestLocation, clearLocation };
+  return { location, error, loading, requestLocation, clearLocation, setLocationManually };
 };
