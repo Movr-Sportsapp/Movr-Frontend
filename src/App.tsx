@@ -16,6 +16,7 @@ function App() {
   return (
     <div>
       <Navbar />
+      <div className="bg-black mt-16 pb-16">
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -70,6 +71,7 @@ function App() {
         <Route path="/healthcheck" element={<HealthCheck />} />
       </Routes>
       <BottomNav />
+      </div>
     </div>
   );
 }

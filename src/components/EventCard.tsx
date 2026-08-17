@@ -24,10 +24,12 @@ export default function EventCard({ event }: EventCardProps) {
   const sportColor = getSportColor(sportName);
 
   return (
-    <div className="rounded-xl bg border border-gray-200 shadow-sm p-4 flex flex-col gap-2 hover:shadow-md transition"
-                           style={{ backgroundColor: `${sportColor}45` }}>
+    <div className="rounded-xl border shadow-sm p-4 flex flex-col gap-2 hover:shadow-md transition bg-black"
+                           style={{ borderColor: sportColor }}>
       <div className="flex justify-between items-start">
-        <h3 className="text-lg font-semibold">{event.title}</h3>
+        <h3 className="text-lg font-semibold"
+        style={{ color: sportColor}}
+        >{event.title}</h3>
         <span
           className="text-xs px-2 py-1 rounded-full flex items-center gap-1"
           style={{ backgroundColor: `${sportColor}22`, color: sportColor }}
@@ -71,9 +73,9 @@ export default function EventCard({ event }: EventCardProps) {
           to={`/events/${event.id}`}
           className={`mt-2 text-center rounded-lg py-2 text-sm font-medium ${
             isFull
-              ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-              : "bg-blue-600 text-white hover:bg-blue-700"
-          }`}
+              ? "bg-gray-200 text-gray-400"
+              : "bg-lime-500 text-black" }`}
+         
         >
           {isFull ? "Full" : "View Details"}
         </Link>
