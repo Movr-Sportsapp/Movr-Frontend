@@ -1,13 +1,13 @@
-import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Menu, X } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import DefaultAvatar from '../../assets/img/default_userAvatar.png';
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+import { useAuth } from "../../context/AuthContext";
+import DefaultAvatar from "../../assets/img/default_userAvatar.png";
 
 const Navbar = () => {
   const { user, loading, logout } = useAuth();
   const navigate = useNavigate();
-  const [menuOpen, setMenuOpen ] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
@@ -15,20 +15,23 @@ const Navbar = () => {
   };
 
   const decoyLinks = [
-      { label: 'Home', to: '/' },
-    { label: 'My Profile', to: '/me' }, // <-- fill in real path once profile page exists
-    { label: 'Browse Activities', to: '/events' },
-    { label: 'Messages', to: '' },       // <-- decoy, no page yet
-    { label: 'About Us', to: '' },      // <-- decoy, no page yet
-    { label: 'Contact MOVR', to: '' }, // <-- decoy, no page yet
+    { label: "Home", to: "/" },
+    { label: "My Profile", to: "/me" }, // <-- fill in real path once profile page exists
+    { label: "Browse Activities", to: "/events" },
+    { label: "Messages", to: "" }, // <-- decoy, no page yet
+    { label: "About Us", to: "" }, // <-- decoy, no page yet
+    { label: "Contact MOVR", to: "" }, // <-- decoy, no page yet
   ];
 
-    return (
-       <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 border-b border-divider bg-bg/90 backdrop-blur-md" >
-        <Link to="/" className="font-display font-black text-2xl tracking-widest uppercase text-white hover:text-lime transition-colors duration-200">
-          MOVR
-        </Link>
-        {!loading && !user && (
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 border-b border-divider bg-bg/90 backdrop-blur-md">
+      <Link
+        to="/"
+        className="font-display font-black text-2xl tracking-widest uppercase text-white hover:text-lime transition-colors duration-200"
+      >
+        MOVR
+      </Link>
+      {!loading && !user && (
         <div className="flex items-center gap-3">
           <NavLink
             to="/signup"
@@ -58,11 +61,15 @@ const Navbar = () => {
             {`Hi, ${user.username}`}
           </span>
 
-          <Link to=""> {/* <-- fill in real profile path */}
+          <Link to="">
+            {" "}
+            {/* <-- fill in real profile path */}
             <img
               src={user.profileImage || DefaultAvatar}
               alt={user.username}
-              onError={(e) => { e.currentTarget.src = DefaultAvatar; }}
+              onError={(e) => {
+                e.currentTarget.src = DefaultAvatar;
+              }}
               className="w-8 h-8 rounded-full object-cover ring-1 ring-lime-400/50"
             />
           </Link>
@@ -92,14 +99,17 @@ const Navbar = () => {
             </NavLink>
           ))}
           <button
-            onClick={handleLogout}
+            onClick={() => {
+              handleLogout();
+              setMenuOpen(false);
+            }}
             className="mt-1 px-3 py-2 rounded-lg text-sm text-left text-red-400 hover:bg-red-400 hover:text-black transition-colors duration-200"
           >
             Logout
           </button>
         </div>
-      )}   
-    </nav>   
+      )}
+    </nav>
   );
 };
 
