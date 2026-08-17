@@ -6,6 +6,7 @@ import { getSportEmoji, getSportColor, getSportImage } from "../assets/sports";
 import { joinEvent, leaveEvent } from "../api/eventApi.ts";
 import type { Event } from "../types/Event";
 import { useAuth } from "../context/AuthContext.tsx";
+import SpotsCard from "../components/spotCard.tsx";
 
 function TagPill({ children }: { children: React.ReactNode }) {
   return (
@@ -138,6 +139,10 @@ export default function EventDetailsPage() {
         {/* Date / spots / CTA */}
         <div className="mb-8 flex flex-col gap-4 rounded-2xl border border-white/10 bg-white/5 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div>
+            <SpotsCard
+              filled={event.participants.length}
+              total={event.maxParticipants}
+            />
             <p className="text-lg font-medium">
               📅{" "}
               {new Date(event.date).toLocaleDateString("de-DE", {
@@ -158,10 +163,6 @@ export default function EventDetailsPage() {
                 📍 {event.location.city}
               </span>
             </div>
-            <p className="mt-4 text-sm text-white/60">
-              {spotsLeft} of {event.maxParticipants} spots left
-              {isFull && <span className="ml-2 text-red-400">(Full)</span>}
-            </p>
           </div>
           <button
             onClick={handleJoinToggle}
