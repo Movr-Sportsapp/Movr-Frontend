@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 export default function useUserLocation() {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading ] = useState(false);
 
-  useEffect(() => {
+  const requestLocation = useCallback(() => {
     if (!navigator.geolocation) {
       setError('Geolocation not supported by this browser');
       return;
     }
+
+    setLoading(true);
+    setError(null);
 
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -16,10 +20,14 @@ export default function useUserLocation() {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
+        setLoading(false);
       },
-      (err) => setError(err.message)
+      (err) => { 
+        setError(err.message);
+        setLoading(false);
+      }
     );
   }, []);
 
-  return { location, error };
+  return { location, error, loading, requestLocation };
 };
