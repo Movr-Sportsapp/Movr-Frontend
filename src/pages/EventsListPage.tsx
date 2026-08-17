@@ -5,6 +5,7 @@ import type { Sport } from "../types/Sport";
 import { getEvents, getSports } from "../api/eventApi";
 import { useAuth } from "../context/AuthContext";
 import EventCard from "../components/EventCard";
+import UserLocation from "../hooks/userLocation";
 
 export default function EventsListPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -20,6 +21,9 @@ export default function EventsListPage() {
   const [error, setError] = useState<string | null>(null);
 
   const { user } = useAuth();
+
+  const [radiusKm, setRadiusKm ] = useState(10);
+  const { location, error: locationError, loading: locationLoading, requestLocation, clearLocation } = UserLocation();
 
   useEffect(() => {
     (async () => {
@@ -40,6 +44,7 @@ export default function EventsListPage() {
         ...(city ? { city } : {}),
         ...(date ? { date } : {}),
         ...(selectedSport ? { sport: selectedSport } : {}),
+        ...(location ? {lat: location.lat, lng: location.lng, radiusKm } : {}),
       });
       setEvents(result.events);
       setCount(result.count);
@@ -48,10 +53,16 @@ export default function EventsListPage() {
     } finally {
       setLoading(false);
     }
-  }, [city, date, selectedSport]);
+  }, [city, date, selectedSport, location, radiusKm]);
+
+  const handleCityChange = (value: string) => {
+    setCity(value);
+    if (value) clearLocation();
+  };
 
   useEffect(() => {
     fetchEvents();
+  // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional fetch-on-filter-change, not a cascading update
   }, [fetchEvents]);
 
   // Title search happens client-side since the API doesn't support it
@@ -76,14 +87,45 @@ export default function EventsListPage() {
 
           <select
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => handleCityChange(e.target.value)}
             className="w-full rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-lime-400"
           >
             <option value="">All Cities</option>
             <option value="Berlin">Berlin</option>
             <option value="Munich">Munich</option>
             <option value="Hamburg">Hamburg</option>
+            <option value="London">London</option>
+            <option value="Vienna">Vienna</option>
+            
           </select>
+          <div className="flex gap-2 items-center">
+  <button
+    onClick={requestLocation}
+    className={`shrink-0 px-4 py-2 rounded-full border text-sm font-medium transition ${
+      location
+        ? "bg-lime-400 border-lime-400 text-black"
+        : "bg-neutral-900 border-neutral-700 text-neutral-300"
+    }`}
+  >
+    📍 {locationLoading ? "Locating…" : "Near me"}
+  </button>
+
+  {location && (
+    <select
+      value={radiusKm}
+      onChange={(e) => setRadiusKm(Number(e.target.value))}
+      className="rounded-xl border border-neutral-700 bg-neutral-900 px-3 py-2 text-sm"
+    >
+      <option value={5}>5 km</option>
+      <option value={10}>10 km</option>
+      <option value={25}>25 km</option>
+    </select>
+  )}
+</div>
+
+{locationError && (
+  <p className="text-red-400 text-sm">{locationError}</p>
+)}
 
           <input
             type="date"

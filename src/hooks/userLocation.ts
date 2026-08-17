@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-export default function useUserLocation() {
+export default function UserLocation() {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading ] = useState(false);
@@ -29,5 +29,9 @@ export default function useUserLocation() {
     );
   }, []);
 
-  return { location, error, loading, requestLocation };
+  const clearLocation = useCallback(() => {
+    setLocation(null);
+  }, []);
+
+  return { location, error, loading, requestLocation, clearLocation };
 };
