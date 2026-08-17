@@ -11,7 +11,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
     const { user } = useAuth();
 
     return (
-        <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
+        <section className="relative min-h-[90%] md:min-h-screenflex flex-col items-center justify-center overflow-hidden">
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
@@ -23,7 +23,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
       <div className="absolute inset-0 bg-linear-to-r from-bg/40 to-transparent" />
 
       <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/10 border border-lime/20 mb-12">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-lime/10 border border-lime/20 mb-12 mt-14">
           <span className="w-2 h-2 rounded-full bg-lime animate-pulse" />
           <span className="text-lime text-xs font-semibold tracking-widest uppercase">
             Sports community · Berlin and beyond
@@ -50,7 +50,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
           </span>
         </h1>
 
-        <p className="text-lg text-white/55 max-w-xl mx-auto mb-10 font-light leading-relaxed">
+        <p className="text-lg text-white/80 max-w-xl mx-auto mb-10 font-light leading-relaxed">
           Join or host sports activities in your city. Run with new friends.
           Play with neighbors. Find a community that moves at your pace.
         </p>
@@ -77,7 +77,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
               >
                 Log in
               </button>
-              <p className="text-sm text-white/25  font-light">
+              <p className="text-sm text-white/  font-light">
           *Must be 18 years or older to join MOVR community 
         </p>
             </>

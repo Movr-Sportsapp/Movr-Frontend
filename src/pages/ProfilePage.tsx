@@ -46,7 +46,7 @@ useEffect(() => {
 }, []);
 
 const createdEvents = myEvents.filter((e) => e.creator.id === user?.id);
-const joinedEvents = myEvents.filter((e) => e.participants.some((p) => p.user.id === user?.id ));
+const joinedEvents = myEvents.filter((e) => e.participants.some((p) => p.user.id === user?.id && e.creator.id !== user?.id ));
 
 
 const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => 
