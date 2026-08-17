@@ -58,7 +58,7 @@ const Navbar = () => {
             {`Hi, ${user.username}`}
           </span>
 
-          <Link to=""> {/* <-- fill in real profile path */}
+          <Link to="/me"> {/* <-- fill in real profile path */}
             <img
               src={user.profileImage || DefaultAvatar}
               alt={user.username}

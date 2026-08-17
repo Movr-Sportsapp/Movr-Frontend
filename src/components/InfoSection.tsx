@@ -35,14 +35,14 @@ export default function InfoSection() {
               <div key={i} className="bg-surface p-8 md:p-10">
                 <div className="flex items-start justify-between mb-6">
                   <span className="text-4xl">{step.icon}</span>
-                  <span className="font-display font-black text-5xl text-lime/15 leading-none">
+                  <span className="font-display font-black text-5xl text-lime leading-none">
                     {step.num}
                   </span>
                 </div>
                 <h3 className="font-display font-bold uppercase text-xl tracking-wide text-white mb-3">
                   {step.title}
                 </h3>
-                <p className="text-muted text-sm leading-relaxed">{step.body}</p>
+                <p className="text-white text-sm leading-relaxed">{step.body}</p>
               </div>
             ))}
           </div>

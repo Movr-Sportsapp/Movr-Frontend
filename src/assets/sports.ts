@@ -114,7 +114,7 @@ export const SPORT_CATALOG: Record<SportName, SportMeta> = {
     color: '#2DD4BF',
     // TODO: swap for a real badminton photo — currently reusing the tennis shot as a placeholder
     image:
-      'https://images.unsplash.com/photo-1668507911709-0249e832618d?w=800&h=500&fit=crop&auto=format',
+      'https://images.unsplash.com/photo-1733141731875-8e33d5f2bd36?w=800&h=500&fit=crop&auto=format',
     category: 'Indoor',
   },
   CrossFit: {
@@ -127,7 +127,8 @@ export const SPORT_CATALOG: Record<SportName, SportMeta> = {
   Rollerskating: {
     emoji: '🛼',
     color: '#F472B6',
-    // TODO: no placeholder image sourced yet from Figma/Unsplash
+    image: 
+    'https://images.unsplash.com/photo-1623091034795-46701649f6e9?w=800&h=500&fit=crop&auto=format',
     category: 'Outdoor',
   },
 };

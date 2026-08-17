@@ -110,7 +110,7 @@ export default function EventDetailsPage() {
         className="relative h-40 w-full bg-cover bg-center sm:h-96"
         style={{ backgroundImage: `url(${getSportImage(sportName)})` }}
       >
-        <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-black/20" />
+        <div className="absolute inset-0 bg-linear-to-r from-black/80  via-black/40 to-black/20" />
         <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10">
           <div className="mb-3 flex items-center gap-2">
             <span className="text-xl">{getSportEmoji(sportName)}</span>
@@ -142,6 +142,7 @@ export default function EventDetailsPage() {
             <SpotsCard
               filled={event.participants.length}
               total={event.maxParticipants}
+              sportName={event.sport?.name ?? 'Unknown'}
             />
             <p className="text-lg font-medium">
               📅{" "}
