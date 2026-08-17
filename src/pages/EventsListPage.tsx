@@ -70,7 +70,7 @@ const handleAddressSearch = async () => {
         ...(city ? { city } : {}),
         ...(date ? { date } : {}),
         ...(selectedSport ? { sport: selectedSport } : {}),
-        ...(location ? {lat: location.lat, lng: location.lng, radiusKm } : {}),
+        ...(location ? {lat: location.lat, lng: location.lng, radius: radiusKm } : {}),
       });
       setEvents(result.events);
       setCount(result.count);
