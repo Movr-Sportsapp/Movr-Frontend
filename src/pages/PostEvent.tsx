@@ -252,14 +252,6 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
   return (
     <div className="min-h-screen bg-[#0d0d0f] text-white">
       <div className="mx-auto max-w-5xl px-4 py-8">
-        <button
-          type="button"
-          onClick={() => navigate(-1)}
-          className="mb-6 flex items-center gap-2 text-sm text-gray-400 transition hover:text-white"
-        >
-          <span aria-hidden="true">←</span> Back
-        </button>
-
         <p
           className="mb-1 text-xs font-semibold tracking-[0.2em]"
           style={{ color: ACCENT }}

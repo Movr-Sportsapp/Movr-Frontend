@@ -27,7 +27,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center justify-between px-6 border-b border-divider bg-bg/90 backdrop-blur-md">
       <Link
         to="/"
-        className="font-display font-black text-2xl tracking-widest uppercase text-white hover:text-lime transition-colors duration-200"
+        className="font-display font-black text-2xl tracking-widest uppercase text-white hover:text-lime"
       >
         MOVR
       </Link>
