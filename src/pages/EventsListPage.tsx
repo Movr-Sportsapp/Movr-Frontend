@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import type { Event } from "../types/Event";
 import type { Sport } from "../types/Sport";
@@ -13,7 +13,6 @@ export default function EventsListPage() {
   const [sports, setSports] = useState<Sport[]>([]);
   const [count, setCount] = useState(0);
 
-  const [search, setSearch] = useState(""); // client-side only — EventsQuery has no text search
   const [city, setCity] = useState("");
   const [date, setDate] = useState("");
   const [selectedSport, setSelectedSport] = useState<string>("");
@@ -101,15 +100,7 @@ export default function EventsListPage() {
 
   useEffect(() => {
     fetchEvents();
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional fetch-on-filter-change, not a cascading update
   }, [fetchEvents]);
-
-  // Title search happens client-side since the API doesn't support it
-  const visibleEvents = useMemo(() => {
-    if (!search.trim()) return events;
-    const q = search.trim().toLowerCase();
-    return events.filter((e) => e.title.toLowerCase().includes(q));
-  }, [events, search]);
 
   return (
     <div className="min-h-screen bg-black text-white ">
@@ -237,7 +228,7 @@ export default function EventsListPage() {
               <p className="text-sm text-neutral-400">
                 {loading
                   ? "Loading…"
-                  : `${visibleEvents.length} activit${visibleEvents.length === 1 ? "y" : "ies"} found`}
+                  : `${events.length} of ${count} activities found`}
               </p>
             </div>
             {user && (
@@ -268,13 +259,13 @@ export default function EventsListPage() {
                 />
               ))}
             </div>
-          ) : !error && visibleEvents.length === 0 ? (
+          ) : !error && events.length === 0 ? (
             <p className="text-center text-neutral-500 py-16">
               No activities found.
             </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {visibleEvents.map((event) => (
+              {events.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
