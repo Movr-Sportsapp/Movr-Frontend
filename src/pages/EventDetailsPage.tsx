@@ -69,6 +69,7 @@ export default function EventDetailsPage() {
         : await joinEvent(eventId!);
       setEvent(res.data);
     } catch (err) {
+      setError(err instanceof Error ? err.message: 'Something went wrong :( ');
       setJoinError(
         isJoined
           ? "Could not leave this event. Please try again."
