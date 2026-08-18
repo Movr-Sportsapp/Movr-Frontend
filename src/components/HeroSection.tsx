@@ -61,7 +61,7 @@ export default function HeroSection({ onSignup, onLogin, onPostEvent}: HeroSecti
               onClick={onPostEvent}
               className="px-8 py-4 rounded-xl bg-lime text-bg font-bold text-base hover:bg-lime/90 active:scale-95 transition-all duration-150 shadow-lg shadow-lime/20"
             >
-              Post an event →
+              Post an activity
             </button>
           ) : (
             <>
