@@ -21,7 +21,7 @@ const HOW_IT_WORKS = [
 
 export default function InfoSection() {
     return (
-      <section className="py-24 px-6 border-t border-divider">
+      <section className="pt-24 pb-15 px-6 border-t border-divider">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <p className="text-lime text-xs font-semibold tracking-widest uppercase mb-3">How it works</p>
