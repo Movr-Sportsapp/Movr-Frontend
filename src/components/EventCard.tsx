@@ -71,11 +71,21 @@ export default function EventCard({ event }: EventCardProps) {
       {user && (
         <Link
           to={`/events/${event.id}`}
-          className={`mt-2 text-center rounded-lg py-2 text-sm font-medium ${
+          className={`mt-2 text-center rounded-lg py-2 text-sm font-medium border transition ${
             isFull
-              ? "bg-gray-200 text-gray-400"
-              : "bg-lime-500 text-black" }`}
-         
+              ? "bg-gray-200 text-gray-400 border-transparent"
+              : "bg-black text-lime border-lime-400/40" }`}
+          style={
+            !isFull 
+            ? {
+                  boxShadow: `
+                      0 0 8px rgba(163, 230, 53, 0.5),
+                      0 0 20px rgba(163, 230, 53, 0.3),
+                      inset 0 0 15px rgba(163, 230, 53, 0.25)
+                  `,
+              }
+            : undefined
+          }
         >
           {isFull ? "Full" : "View Details"}
         </Link>
