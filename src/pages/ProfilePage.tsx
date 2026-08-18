@@ -19,7 +19,6 @@ const [form, setForm] = useState<UpdateUserInput>({
     lastName: user?.lastName ?? '',
     username: user?.username ?? '',
     email: user?.email ?? '',
-    dateOfBirth: user?.dateOfBirth ?? '',
     gender: user?.gender ?? 'other',
     location: { 
         city: user?.location?.city ?? '', 
@@ -28,6 +27,10 @@ const [form, setForm] = useState<UpdateUserInput>({
     profileImage: user?.profileImage,
     sports :  user?.sports ?? [],  
 });
+
+// Success Message after editing profile, so User knows it worked (or not)
+const [successMessage, setSuccessMessage ] = useState<string | null>(null);
+
 
 const [myEvents, setMyEvents ] = useState<Event[]>([]);
 const [eventsLoading, setEventsLoading ] = useState(true);
@@ -71,7 +74,9 @@ const handleSubmit = async (e: React.ChangeEvent) => {
     setError(null);
     try {
         await updateUser(form);
-        setIsEditing(true);
+        setIsEditing(false);
+        setSuccessMessage('Profile updated!');
+        setTimeout(() => setSuccessMessage(null), 1500)
     } catch (err) {
         setError(err instanceof Error ? err.message: 'Something went wrong :( ');
     } finally {
@@ -81,6 +86,11 @@ const handleSubmit = async (e: React.ChangeEvent) => {
 
 return( 
      <div className="min-h-screen bg-black text-white px-6 py-10 max-w-2xl mx-auto">
+        {successMessage && (
+            <p className="text-sm text-lime-400 bg-lime-400/10 px-3 py-2 rounded-lg">
+        {successMessage}
+    </p>
+        )}
         {!isEditing ? (
             <div className="flex flex-col items-center gap-4">
                 <img
