@@ -177,7 +177,6 @@ export default function PostActivityPage({ onSuccess }: PostActivityPageProps) {
 
     return () => clearTimeout(timeout);
     // Only re-run when the address text itself changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [form.location.address]);
 
   const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
