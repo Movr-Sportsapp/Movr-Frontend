@@ -104,7 +104,10 @@ export default function EventsListPage() {
 
   return (
     <div className="min-h-screen bg-black text-white ">
-      <div className="max-w-3xl mx-auto px-4">
+      <div className="max-w-3xl mx-auto px-4 py-6">
+        <h1 className="text-3xl font-extrabold tracking-tight">
+          BROWSE ACTIVITIES
+        </h1>  
         {/* Sticky search + filters */}
         <div className="bg-black pt-3 pb-3 flex flex-col gap-2">
           <select
