@@ -11,11 +11,13 @@ import { RequireAuth, RequireGuest } from "./routes/routeGuards";
 import EventsListPage from "./pages/EventsListPage";
 import  EventDetailsPage from "./pages/EventDetailsPage";
 import UpdateUser from "./pages/ProfilePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <div>
       <Navbar />
+        <ScrollToTop />
       <div className="bg-black mt-16 pb-16">
       <Routes>
         <Route path="/" element={<HomePage />} />
