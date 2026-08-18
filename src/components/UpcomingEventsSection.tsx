@@ -37,7 +37,7 @@ export default function UpcomingEvents() {
     if (error) return <p className="text-center text-red-400 py-12">{error}</p>;
 
     return (
-        <section className="px-6 py-24 border-t border-divider">
+        <section className="px-6 py-14 border-t border-divider">
             <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>

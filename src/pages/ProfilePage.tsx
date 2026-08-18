@@ -31,7 +31,7 @@ const [form, setForm] = useState<UpdateUserInput>({
 // Success Message after editing profile, so User knows it worked (or not)
 const [successMessage, setSuccessMessage ] = useState<string | null>(null);
 
-
+const [ activeTab, setActiveTab ] = useState<'created' | 'joined'>('created'); // State for toggle switch 
 const [myEvents, setMyEvents ] = useState<Event[]>([]);
 const [eventsLoading, setEventsLoading ] = useState(true);
 
@@ -84,6 +84,12 @@ const handleSubmit = async (e: React.ChangeEvent) => {
     }
 };
 
+const displayedEvents = activeTab === 'created' ? createdEvents : joinedEvents;
+const emptyListMessage = activeTab === 'created' 
+                                        ? 'You havent created any events yet.' 
+                                        : 'You havent joined any events yet.';
+
+
 return( 
      <div className="min-h-screen bg-black text-white px-6 py-10 max-w-2xl mx-auto">
         {successMessage && (
@@ -113,93 +119,152 @@ return(
                 >
                     Edit Profile
                 </button>
-            <div className="w-full mt-8">
-    <h2 className="text-lg font-semibold mb-3">Events you created</h2>
-    {eventsLoading ? (
-        <p className="text-sm text-white/60">Loading events...</p>
-    ) : createdEvents.length === 0 ? (
-        <p className="text-sm text-white/60">You haven't created any events yet.</p>
-    ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {createdEvents.map((event) => (
-                <EventCard key={event.id} event={event} />
-            ))}
-        </div>
-    )}
-</div>
 
-<div className="w-full mt-8">
-    <h2 className="text-lg font-semibold mb-3">Events you joined</h2>
+            <div className="w-full mt-8">
+
+    {/* Toggle switch so the user can switch between looking at events they created and events joined */}
+
+<div className=" relative flex bg-white/5 rounded-full p-1 mb-4 w-fit">
+            {/* sliding background for cool sliding switch effect */}
+        <div
+        className="absolute top-1 bottom-1 w-[calc(50%-4px)] rounded-full bg-lime-400 transition-transform duration-300 ease-out"
+        style={{
+            transform: activeTab === 'created' 
+                ? 'translateX(0%)' 
+                : 'translateX(100%)'
+        }}
+    />  
+        <button
+        onClick={() => setActiveTab('created')}
+        className={`relative z-10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            activeTab === 'created' ? 'text-black' : 'text-white/60'
+        }`}>
+            Created
+        </button>
+        <button
+        onClick={() => setActiveTab('joined')}
+        className={`relative z-10 px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+            activeTab === 'joined' ? 'text-black' : 'text-white/60'
+        }`} >
+            Joined
+        </button>
+    </div>
+
+    <h2 className="text-lg font-semibold mb-3">
+        {activeTab === 'created' ? 'Events you created' : 'Events you joined'}
+    </h2>
+
     {eventsLoading ? (
         <p className="text-sm text-white/60">Loading events...</p>
-    ) : joinedEvents.length === 0 ? (
-        <p className="text-sm text-white/60">You haven't joined any events yet.</p>
+    ) : (
+        displayedEvents.length === 0 ? (
+        <p className="text-sm text-white/60">{emptyListMessage}</p>
     ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {joinedEvents.map((event) => (
+            {displayedEvents.map((event) => (
                 <EventCard key={event.id} event={event} />
             ))}
         </div>
-    )}
+        ))}
 </div>
-        
-            </div>
+</div>
         ) : (
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                 <h1 className="text-2xl font-bold mb-2">Edit Profile</h1>
 
                 {error && <p className="text-red-400 text-sm">{error}</p>}
-
+                
+                    <div>
+                    <label htmlFor="firstName" className="text-xs text-white/60 mb-1 block">
+                        First name
+                    </label>
                 <input
+                    id='firstName'
                     name="firstName"
                     value={form.firstName}
                     onChange={handleChange}
                     placeholder="First name"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div>
+                <div>
+                    <label htmlFor="lastName" className="text-xs text-white/60 mb-1 block">
+                       Last name
+                    </label>
                 <input
+                    id='lastName'
                     name="lastName"
                     value={form.lastName}
                     onChange={handleChange}
                     placeholder="Last name"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div> 
+                <div>
+                <label htmlFor="username" className="text-xs text-white/60 mb-1 block">
+                       Username
+                    </label>
                 <input
+                    id='username'
                     name="username"
                     value={form.username}
                     onChange={handleChange}
                     placeholder="Username"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div>
+                <div >
+                    <label htmlFor="bio" className="text-xs text-white/60 mb-1 block">
+                       Bio text
+                    </label>
                 <input
+                    id='bio'
                     name="bio"
                     value={form.bio ?? ""}
                     onChange={handleChange}
                     placeholder="Bio"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div>
+                <div>
+                    <label htmlFor="profilImage" className="text-xs text-white/60 mb-1 block">
+                       Profile image url
+                    </label>
                 <input
+                    id='profilImage'
                     name="profileImage"
                     value={form.profileImage ?? ""}
                     onChange={handleChange}
                     placeholder="Profile image URL"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div>
+               <div>
+                    <label htmlFor="city" className="text-xs text-white/60 mb-1 block">
+                       City
+                    </label>
                 <input
+                    id='city'
                     name="city"
                     value={form.location?.city ?? ""}
                     onChange={handleLocationChange}
                     placeholder="City"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
+                </div>
+                <div>
+                    <label htmlFor="country" className="text-xs text-white/60 mb-1 block">
+                       Country
+                    </label>
                 <input
+                    id="country"
                     name="country"
                     value={form.location?.country ?? ""}
                     onChange={handleLocationChange}
                     placeholder="Country"
                     className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm"
                 />
-
+                </div>
                 <div className="flex gap-3 mt-2">
                     <button
                         type="submit"
