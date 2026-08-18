@@ -1,4 +1,4 @@
-import type { Event, EventResponse, EventsQuery } from "../types/Event";
+import type { Event, EventsQuery } from "../types/Event";
 import { apiFetch } from "./fetchClient";
 import type { Sport } from "../types/Sport";
 
@@ -19,8 +19,10 @@ export async function getSports(): Promise<Sport[]> {
 
 export type CreateEventInput = Omit<
   Event,
-  "id" | "creator" | "participants" | "status" | "public"
->;
+  "id" | "creator" | "participants" | "status" | "public" | "sport"
+> & {
+  sport: string; 
+};
 
 export async function createEvent(data: CreateEventInput): Promise<Event> {
   return apiFetch("/events", {
