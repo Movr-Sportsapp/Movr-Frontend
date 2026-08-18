@@ -101,6 +101,9 @@ export default function EventDetailsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
+    <h1 className="mb-8 text-3xl font-extrabold tracking-tight">
+          POST ACTIVITY
+        </h1>  
       {isInactive && (
         <div className="bg-white/10 py-2 text-center text-sm text-white/70">
           This event is {event.status}.

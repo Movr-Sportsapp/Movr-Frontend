@@ -114,7 +114,7 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full rounded-xl bg-lime-400 py-3 text-sm font-bold text-black hover:bg-lime-300 disabled:opacity-50 disabled:cursor-not-allowed transition"
           >
-            {loading ? "Signing in..." : "Sign In"}
+            {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
 
@@ -124,7 +124,7 @@ export default function LoginPage() {
             to="/signup"
             className="text-lime-400 font-semibold hover:underline"
           >
-            Join free
+            Join Movr
           </Link>
         </p>
       </div>
