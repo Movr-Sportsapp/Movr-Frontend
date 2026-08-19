@@ -23,7 +23,6 @@ interface EventLocationMapProps {
 
 
 export function EventLocationMap({ lat, lng, label}: EventLocationMapProps) {
-    console.log(lat, lng);
     return (
         <MapContainer
           center={[ lat, lng]}
