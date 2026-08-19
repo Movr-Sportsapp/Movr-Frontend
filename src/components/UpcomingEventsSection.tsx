@@ -53,11 +53,11 @@ export default function UpcomingEvents() {
                 ))}
             </div>
             <p className="text-lime text-xs font-semibold tracking-widest uppercase mb-3">
-                Want to browse more events? 
+                Want to browse more activities? 
             </p>
             {user ? (
             <button className="px-8 py-4 rounded-xl bg-lime text-bg font-bold text-base hover:bg-lime/90 active:scale-95 transition-all duration-150 shadow-lg shadow-lime/20">
-              <NavLink to='/events'>Browse events</NavLink>
+              <NavLink to='/events'>Browse activities</NavLink>
             </button>
           ) : (
             <>
