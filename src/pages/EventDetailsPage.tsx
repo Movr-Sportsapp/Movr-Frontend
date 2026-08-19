@@ -7,6 +7,7 @@ import { joinEvent, leaveEvent } from "../api/eventApi.ts";
 import type { Event } from "../types/Event";
 import { useAuth } from "../context/AuthContext.tsx";
 import SpotsCard from "../components/spotCard.tsx";
+import DefaultAvatar from '../assets/img/default_userAvatar.png';
 
 function TagPill({ children }: { children: React.ReactNode }) {
   return (
@@ -25,6 +26,28 @@ export default function EventDetailsPage() {
   const navigate = useNavigate();
   const [joining, setJoining] = useState(false);
   const [joinError, setJoinError] = useState<string | null>(null);
+
+  //for contacting host (mock form)
+  const [ showContactForm, setShowContactForm ] = useState(false);
+  const [ message, setMessage ] = useState('');
+  const [ sent, setSent ] = useState(false);
+
+  const handleSend = () => {
+    if (!message.trim()) return;
+   
+        setSent(true);
+
+        setTimeout(() => {
+          setSent(false);
+          setMessage('');
+          setShowContactForm(false);
+         }, 1500);
+  };
+
+  const handleCancel = () => {
+    setMessage('');
+    setShowContactForm(false);
+  };
 
   useEffect(() => {
     if (!eventId) return;
@@ -101,8 +124,8 @@ export default function EventDetailsPage() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-    <h1 className="mb-8 text-3xl font-extrabold tracking-tight">
-          POST ACTIVITY
+    <h1 className="mb-6 pl-4 pt-6 text-3xl font-extrabold tracking-tight">
+          EVENT DETAILS
         </h1>  
       {isInactive && (
         <div className="bg-white/10 py-2 text-center text-sm text-white/70">
@@ -200,7 +223,7 @@ export default function EventDetailsPage() {
         {/* Host */}
         <div className="mb-8 flex items-center gap-3">
           <img
-            src={event.creator.profileImage}
+            src={event.creator.profileImage || DefaultAvatar}
             alt={event.creator.username}
             className="h-11 w-11 rounded-full object-cover"
           />
@@ -209,6 +232,49 @@ export default function EventDetailsPage() {
             <p className="font-medium">{event.creator.username}</p>
           </div>
         </div>
+
+        {/* Mock Contact Button and form to send host a message */}
+      {isJoined && !isHost && (
+  <div className="mb-8">
+    {!showContactForm ? (
+      <button
+        onClick={() => setShowContactForm(true)}
+        className="px-4 py-2 rounded-lg text-sm font-medium  border border-white/20  bg-white/5"
+        style={{ color: getSportColor(sportName)}}>
+        Contact host
+      </button>
+    ) : sent ? (
+      <p className="text-sm" style={{ color: getSportColor(sportName) }}>
+        Message sent to {event.creator.username}! 🎉
+      </p>
+    ) : (
+      <div className="flex flex-col gap-2">
+        <textarea
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder={`Ask ${event.creator.username} a question...`}
+          rows={3}
+          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none"
+        />
+        <div className="flex gap-2">
+          <button
+            onClick={handleSend}
+            className="px-4 py-2 rounded-lg text-sm font-medium text-black"
+            style={{ backgroundColor: getSportColor(sportName) }}
+          >
+            Send
+          </button>
+          <button
+            onClick={handleCancel}
+            className="px-4 py-2 rounded-lg border border-white/20 text-sm"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    )}
+  </div>
+)}  
 
         {/* Description */}
         <div className="mb-8">
@@ -255,7 +321,7 @@ export default function EventDetailsPage() {
               ) : (
                 <img
                   key={participants.user.id}
-                  src={participants.user.profileImage}
+                  src={participants.user.profileImage || DefaultAvatar}
                   alt={participants.user.username}
                   title={participants.user.username}
                   className="h-9 w-9 rounded-full border-2 border-black object-cover"

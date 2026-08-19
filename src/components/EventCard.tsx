@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import type { Event } from "../types/Event";
 import { useAuth } from "../context/AuthContext";
 import { getSportEmoji, getSportColor } from "../assets/sports";
+import DefaultAvatar from '../assets/img/default_userAvatar.png';
 
 interface EventCardProps {
   event: Event;
@@ -55,7 +56,7 @@ export default function EventCard({ event }: EventCardProps) {
         {/* Avatar only for logged-in users */}
         {user && (
           <img
-            src={event.creator.profileImage}
+            src={event.creator.profileImage || DefaultAvatar}
             alt={event.creator.username}
             className="w-5 h-5 rounded-full object-cover ring-1 ring-white/10"
           />
