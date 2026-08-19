@@ -12,6 +12,7 @@ import EventsListPage from "./pages/EventsListPage";
 import  EventDetailsPage from "./pages/EventDetailsPage";
 import UpdateUser from "./pages/ProfilePage";
 import ScrollToTop from "./components/ScrollToTop";
+import MessagePage from "./pages/MessagePage";
 
 function App() {
   return (
@@ -67,6 +68,14 @@ function App() {
           element={
             <RequireAuth>
               <UpdateUser />
+            </RequireAuth>
+          }
+          />
+           <Route
+          path="/messages"
+          element={
+            <RequireAuth>
+              <MessagePage />
             </RequireAuth>
           }
           />
